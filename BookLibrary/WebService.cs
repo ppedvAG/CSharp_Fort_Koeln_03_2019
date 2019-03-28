@@ -22,7 +22,7 @@ namespace BookLibrary
             var apiResults = JsonConvert.DeserializeObject<GoogleBooksAPIResult>(json);
 
             List<IBook> bookResults = new List<IBook>();
-            foreach (var book in apiResults.items)
+            foreach (var book in apiResults.books)
             {
                 string id = book?.id;
                 string title = book?.volumeInfo?.title;

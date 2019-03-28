@@ -47,9 +47,11 @@
     <Compile Include="Book.cs" />
     <Compile Include="FavoriteManager.cs" />
     <Compile Include="GoogleBooksAPIResult.cs" />
+    <Compile Include="IgnoreForSortingAttribute.cs" />
     <Compile Include="MockStorage.cs" />
     <Compile Include="MockWebService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SortingDescriptionAttribute.cs" />
     <Compile Include="Storage.cs" />
     <Compile Include="WebService.cs" />
   </ItemGroup>

@@ -30,5 +30,7 @@ namespace GoogleBooksClient
         private static IStorage _storage;
         public static IStorage Storage => _storage ?? (_storage = new Storage());
 
+        public static List<IPlugin> Plugins = new List<IPlugin>();
+
     }
 }

@@ -37,6 +37,7 @@
             this.favoritenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pluginInstallierenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.beendenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.flowLayoutPanelSortButtons = new System.Windows.Forms.FlowLayoutPanel();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,9 +71,9 @@
             // 
             this.flowLayoutPanelBookResults.AutoScroll = true;
             this.flowLayoutPanelBookResults.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanelBookResults.Location = new System.Drawing.Point(67, 137);
+            this.flowLayoutPanelBookResults.Location = new System.Drawing.Point(64, 211);
             this.flowLayoutPanelBookResults.Name = "flowLayoutPanelBookResults";
-            this.flowLayoutPanelBookResults.Size = new System.Drawing.Size(1205, 717);
+            this.flowLayoutPanelBookResults.Size = new System.Drawing.Size(1205, 694);
             this.flowLayoutPanelBookResults.TabIndex = 3;
             this.flowLayoutPanelBookResults.WrapContents = false;
             // 
@@ -109,6 +110,7 @@
             this.pluginInstallierenToolStripMenuItem.Name = "pluginInstallierenToolStripMenuItem";
             this.pluginInstallierenToolStripMenuItem.Size = new System.Drawing.Size(252, 30);
             this.pluginInstallierenToolStripMenuItem.Text = "Plugin installieren";
+            this.pluginInstallierenToolStripMenuItem.Click += new System.EventHandler(this.pluginInstallierenToolStripMenuItem_Click);
             // 
             // beendenToolStripMenuItem
             // 
@@ -116,11 +118,21 @@
             this.beendenToolStripMenuItem.Size = new System.Drawing.Size(252, 30);
             this.beendenToolStripMenuItem.Text = "Beenden";
             // 
+            // flowLayoutPanelSortButtons
+            // 
+            this.flowLayoutPanelSortButtons.AutoScroll = true;
+            this.flowLayoutPanelSortButtons.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.flowLayoutPanelSortButtons.Location = new System.Drawing.Point(64, 134);
+            this.flowLayoutPanelSortButtons.Name = "flowLayoutPanelSortButtons";
+            this.flowLayoutPanelSortButtons.Size = new System.Drawing.Size(1204, 54);
+            this.flowLayoutPanelSortButtons.TabIndex = 5;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1309, 874);
+            this.Controls.Add(this.flowLayoutPanelSortButtons);
             this.Controls.Add(this.flowLayoutPanelBookResults);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBoxSearchTerm);
@@ -148,6 +160,7 @@
         private System.Windows.Forms.ToolStripMenuItem favoritenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pluginInstallierenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem beendenToolStripMenuItem;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelSortButtons;
     }
 }
 

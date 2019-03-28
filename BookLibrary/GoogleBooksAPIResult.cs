@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace BookLibrary
 {
@@ -10,7 +11,8 @@ namespace BookLibrary
 
     public class GoogleBooksAPIResult
     {
-        public BookResult[] items { get; set; }
+        [JsonProperty("items")]
+        public BookResult[] books { get; set; }
     }
 
     public class BookResult

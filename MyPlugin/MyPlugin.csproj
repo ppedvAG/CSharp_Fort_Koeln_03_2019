@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D5689CE5-0A5D-4F56-A0B5-234BBA57DB93}</ProjectGuid>
+    <ProjectGuid>{B0BBAED8-973D-4B95-8EDD-D76AD7F44E10}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BookContracts</RootNamespace>
-    <AssemblyName>BookContracts</AssemblyName>
+    <RootNamespace>MyPlugin</RootNamespace>
+    <AssemblyName>MyPlugin</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,12 +42,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IBook.cs" />
-    <Compile Include="IFavoriteManager.cs" />
-    <Compile Include="IPlugin.cs" />
-    <Compile Include="IStorage.cs" />
-    <Compile Include="IWebService.cs" />
+    <Compile Include="CoverPlugin.cs" />
+    <Compile Include="PreviewPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BookContracts\BookContracts.csproj">
+      <Project>{d5689ce5-0a5d-4f56-a0b5-234bba57db93}</Project>
+      <Name>BookContracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

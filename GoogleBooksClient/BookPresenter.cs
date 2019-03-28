@@ -26,6 +26,12 @@ namespace GoogleBooksClient
             listBoxAuthors.DataSource = _book.Authors;
             checkBoxFavorite.Checked = _book.IsFavorite;
 
+            //weitere Elemente einfügen
+            foreach (var plugin in GlobalModules.Plugins)
+            {
+                plugin.AddOtherControls(this.Controls, _book);
+            }
+
             checkBoxFavorite.CheckedChanged += CheckBoxFavorite_CheckedChanged;
         }
 
