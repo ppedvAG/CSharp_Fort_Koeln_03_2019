@@ -28,8 +28,7 @@ namespace Neue_LINQ_Methode
             Einwohenrverzeichnis.Add("Köln", "Sebastian");
 
 
-            Dictionary<string, string[]> zweiteTabelle = new Dictionary<string, string[]>();
-            zweiteTabelle.Add()
+           
         }
     }
 }

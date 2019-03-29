@@ -30,7 +30,7 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxSearchTerm = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonSearch = new System.Windows.Forms.Button();
             this.flowLayoutPanelBookResults = new System.Windows.Forms.FlowLayoutPanel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,6 +38,7 @@
             this.pluginInstallierenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.beendenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanelSortButtons = new System.Windows.Forms.FlowLayoutPanel();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,16 +57,17 @@
             this.textBoxSearchTerm.Name = "textBoxSearchTerm";
             this.textBoxSearchTerm.Size = new System.Drawing.Size(158, 26);
             this.textBoxSearchTerm.TabIndex = 1;
+            this.textBoxSearchTerm.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBoxSearchTerm_KeyUp);
             // 
-            // button1
+            // buttonSearch
             // 
-            this.button1.Location = new System.Drawing.Point(552, 71);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(186, 34);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Suche";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonSearch.Location = new System.Drawing.Point(552, 71);
+            this.buttonSearch.Name = "buttonSearch";
+            this.buttonSearch.Size = new System.Drawing.Size(186, 34);
+            this.buttonSearch.TabIndex = 2;
+            this.buttonSearch.Text = "Suche";
+            this.buttonSearch.UseVisualStyleBackColor = true;
+            this.buttonSearch.Click += new System.EventHandler(this.button1_Click);
             // 
             // flowLayoutPanelBookResults
             // 
@@ -101,21 +103,21 @@
             // favoritenToolStripMenuItem
             // 
             this.favoritenToolStripMenuItem.Name = "favoritenToolStripMenuItem";
-            this.favoritenToolStripMenuItem.Size = new System.Drawing.Size(252, 30);
+            this.favoritenToolStripMenuItem.Size = new System.Drawing.Size(233, 30);
             this.favoritenToolStripMenuItem.Text = "Favoriten";
             this.favoritenToolStripMenuItem.Click += new System.EventHandler(this.favoritenToolStripMenuItem_Click);
             // 
             // pluginInstallierenToolStripMenuItem
             // 
             this.pluginInstallierenToolStripMenuItem.Name = "pluginInstallierenToolStripMenuItem";
-            this.pluginInstallierenToolStripMenuItem.Size = new System.Drawing.Size(252, 30);
+            this.pluginInstallierenToolStripMenuItem.Size = new System.Drawing.Size(233, 30);
             this.pluginInstallierenToolStripMenuItem.Text = "Plugin installieren";
             this.pluginInstallierenToolStripMenuItem.Click += new System.EventHandler(this.pluginInstallierenToolStripMenuItem_Click);
             // 
             // beendenToolStripMenuItem
             // 
             this.beendenToolStripMenuItem.Name = "beendenToolStripMenuItem";
-            this.beendenToolStripMenuItem.Size = new System.Drawing.Size(252, 30);
+            this.beendenToolStripMenuItem.Size = new System.Drawing.Size(233, 30);
             this.beendenToolStripMenuItem.Text = "Beenden";
             // 
             // flowLayoutPanelSortButtons
@@ -127,14 +129,23 @@
             this.flowLayoutPanelSortButtons.Size = new System.Drawing.Size(1204, 54);
             this.flowLayoutPanelSortButtons.TabIndex = 5;
             // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(760, 70);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(191, 34);
+            this.progressBar.TabIndex = 6;
+            this.progressBar.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1309, 874);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.flowLayoutPanelSortButtons);
             this.Controls.Add(this.flowLayoutPanelBookResults);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.buttonSearch);
             this.Controls.Add(this.textBoxSearchTerm);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
@@ -142,6 +153,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Form1_PreviewKeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -153,7 +165,7 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxSearchTerm;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonSearch;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelBookResults;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem dateiToolStripMenuItem;
@@ -161,6 +173,7 @@
         private System.Windows.Forms.ToolStripMenuItem pluginInstallierenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem beendenToolStripMenuItem;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelSortButtons;
+        private System.Windows.Forms.ProgressBar progressBar;
     }
 }
 

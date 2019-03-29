@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,6 +18,7 @@ namespace GoogleBooksClient
     {
 
         IEnumerable<IBook> _lastResult;
+        CancellationTokenSource _cts;
 
         public Form1()
         {
@@ -24,7 +26,7 @@ namespace GoogleBooksClient
             //SortButtons vorbereiten
             foreach (var property in typeof(Book).GetProperties(BindingFlags.Instance | BindingFlags.Public))
             {
-                if(property.GetCustomAttribute<IgnoreForSortingAttribute>() == null)
+                if (property.GetCustomAttribute<IgnoreForSortingAttribute>() == null)
                 {
                     SortingDescriptionAttribute descriptionAttribute = property.GetCustomAttribute<SortingDescriptionAttribute>();
                     string buttonText = $"Nach {property.Name} sortieren";
@@ -44,7 +46,7 @@ namespace GoogleBooksClient
                         if (_lastResult == null)
                             return;
 
-                        if(property.PropertyType.GetInterface(typeof(ICollection<string>).Name) != null)
+                        if (property.PropertyType.GetInterface(typeof(ICollection<string>).Name) != null)
                         {
                             _lastResult = _lastResult.OrderBy(book => (property.GetValue(book) as ICollection<string>).Count).ToList();
                         }
@@ -56,28 +58,72 @@ namespace GoogleBooksClient
                     };
                     flowLayoutPanelSortButtons.Controls.Add(newSortButton);
                 }
-            }   
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(string.IsNullOrWhiteSpace(textBoxSearchTerm.Text))
+            SearchWebserviceForBooks();
+        }
+
+        public bool SearchRunning
+        {
+            set
+            {
+                if(value)
+                {
+                    progressBar.Visible = true;
+                    buttonSearch.Enabled = false;
+                    progressBar.Value = 0;
+                }
+                else
+                {
+                    progressBar.Visible = false;
+                    buttonSearch.Enabled = true;
+                }
+            }
+        }
+
+        public async void SearchWebserviceForBooks()
+        {
+            buttonSearch.Enabled = false;
+
+            if (string.IsNullOrWhiteSpace(textBoxSearchTerm.Text))
             {
                 MessageBox.Show("Kein Suchbegriff eingegeben!");
                 return;
             }
 
-            _lastResult = GlobalModules.WebService.SearchBooks(new Book(textBoxSearchTerm.Text));
+            SearchRunning = true;
 
-            if(_lastResult.Count() == 0)
+            Progress<int> progress = new Progress<int>();
+            progress.ProgressChanged += Progress_ProgressChanged;
+
+            _cts = new CancellationTokenSource();
+
+            CancellationToken token = _cts.Token;
+
+            _lastResult = await GlobalModules.WebService.SearchBooks(new Book(textBoxSearchTerm.Text), progress, _cts.Token);
+
+            SearchRunning = false;
+
+            if (_lastResult.Count() == 0)
             {
-                MessageBox.Show("Keine Bücher gefunden!");
+                if (!token.IsCancellationRequested)
+                {
+                    MessageBox.Show("Keine Bücher gefunden!");
+                }
                 return;
             }
 
             GlobalModules.FavoriteManager.MarkIfFavorite(_lastResult);
 
             ShowBooks(_lastResult);
+        }
+
+        private void Progress_ProgressChanged(object sender, int progress)
+        {
+            progressBar.Value = progress;
         }
 
         void ShowBooks(IEnumerable<IBook> books)
@@ -93,7 +139,7 @@ namespace GoogleBooksClient
         private void favoritenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _lastResult = GlobalModules.FavoriteManager.FavoriteBooks;
-            if(_lastResult.Count() == 0)
+            if (_lastResult.Count() == 0)
             {
                 MessageBox.Show("Es sind keine Favoriten gespeichert!");
                 return;
@@ -103,7 +149,7 @@ namespace GoogleBooksClient
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(GlobalModules.FavoriteManager.PendingChanges)
+            if (GlobalModules.FavoriteManager.PendingChanges)
             {
                 var dialogResult = MessageBox.Show("Wollen Sie die Änderungen speichern?", "Speichern?", MessageBoxButtons.YesNoCancel);
                 switch (dialogResult)
@@ -122,7 +168,7 @@ namespace GoogleBooksClient
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Plugins|*.dll";
-            if(dialog.ShowDialog() == DialogResult.OK)
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
                 Assembly assembly = Assembly.LoadFrom(dialog.FileName);
                 Type[] types = assembly.GetTypes();
@@ -130,14 +176,37 @@ namespace GoogleBooksClient
                 {
                     foreach (var @interface in type.GetInterfaces())
                     {
-                        if(@interface == typeof(IPlugin))
+                        if (@interface == typeof(IPlugin))
                         {
-                            IPlugin newPlugin =  (IPlugin)Activator.CreateInstance(type);
+                            IPlugin newPlugin = (IPlugin)Activator.CreateInstance(type);
                             GlobalModules.Plugins.Add(newPlugin);
                             break;
                         }
                     }
                 }
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+
+        }
+
+        private void textBoxSearchTerm_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                SearchWebserviceForBooks();
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                SearchRunning = false;
+                _cts?.Cancel();
             }
         }
     }

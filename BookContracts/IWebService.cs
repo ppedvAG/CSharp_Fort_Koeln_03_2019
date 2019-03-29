@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BookContracts
 {
     public interface IWebService
     {
-        IEnumerable<IBook> SearchBooks(IBook searchParameters);
+        Task<IEnumerable<IBook>> SearchBooks(IBook searchParameters, IProgress<int> progress, CancellationToken token);
     }
 }

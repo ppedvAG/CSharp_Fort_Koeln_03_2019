@@ -10,6 +10,27 @@ namespace GoogleBooksClient
 {
     public static class GlobalModules
     {
+        #region Javascript-Hölle
+        public static void JavascriptIsBack()
+        {
+            dynamic unbekannteVariable = 20;
+            unbekannteVariable = "asdasd";
+            unbekannteVariable.Run(20, "kadsdksao");
+
+
+            Console.WriteLine(Berechne(2, 5));
+            Console.WriteLine(Berechne(12, 5));
+            Console.WriteLine(Berechne(4, 5));
+
+
+            int Berechne(int x1, int x2) {
+                return x1 + x2;
+            }
+
+        }
+        #endregion
+
+
         private static IWebService _webService;
         //Abwandlung des Singleton-Prinzips
         public static IWebService WebService
